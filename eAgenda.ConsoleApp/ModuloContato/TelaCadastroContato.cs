@@ -76,7 +76,7 @@ namespace eAgenda.ConsoleApp.ModuloContato
         public bool VisualizarRegistros(string tipoVisualizacao)
         {
             if (tipoVisualizacao == "Tela")
-                MostrarTitulo("Visualização de Tarefas Cadastradas");
+                MostrarTitulo("Visualização de Contato Cadastrados");
 
             List<Contato> contatos = _repositorioContato.SelecionarTodos();
 
@@ -96,22 +96,22 @@ namespace eAgenda.ConsoleApp.ModuloContato
 
         private Contato obterCompromisso()
         {
-            Console.Write("Digite o assunto do compromisso: ");
-            string assunto = Console.ReadLine();
+            Console.Write("Digite o nome do contato: ");
+            string nome = Console.ReadLine();
 
-            Console.Write("Digite o local do compromisso: ");
-            string local = Console.ReadLine();
+            Console.Write("Digite o email do contato: ");
+            string email = Console.ReadLine();
 
-            Console.Write("Digite a data do compromisso: ");
-            DateTime data = new DateTime();
+            Console.Write("Digite o telefone do contato: ");
+            string telefone = Console.ReadLine();
 
-            Console.Write("Digite a hora do início do compromisso (horas:minuto): ");
-            string hora_inicio = Console.ReadLine();
+            Console.Write("Digite a empresa do contato: ");
+            string empresa = Console.ReadLine();
 
-            Console.Write("Digite a hora do termino do compromisso (horas:minutos): ");
-            string hora_termino = Console.ReadLine();
+            Console.Write("Digite o cargo do contato: ");
+            string cargo = Console.ReadLine();
 
-            return new Contato(assunto, local, data, hora_inicio, hora_termino);
+            return new Contato(nome, email, telefone, empresa, cargo);
         }
 
         public int ObterNumeroRegistro()
