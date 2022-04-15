@@ -79,13 +79,13 @@ namespace eAgenda.ConsoleApp.ModuloCompromisso
         public bool VisualizarRegistros(string tipoVisualizacao)
         {
             if (tipoVisualizacao == "Tela")
-                MostrarTitulo("Visualização de Tarefas Cadastradas");
+                MostrarTitulo("Visualização de Compromissos Cadastrados");
 
             List<Compromisso> compromissos = _repositorioCompromisso.SelecionarTodos();
 
             if (compromissos.Count == 0)
             {
-                _notificador.ApresentarMensagem("Nenhum garçom disponível.", TipoMensagem.Atencao);
+                _notificador.ApresentarMensagem("Nenhum compromisso disponível.", TipoMensagem.Atencao);
                 return false;
             }
 

@@ -82,7 +82,7 @@ namespace eAgenda.ConsoleApp.ModuloTarefa
 
             if (tarefas.Count == 0)
             {
-                _notificador.ApresentarMensagem("Nenhum garçom disponível.", TipoMensagem.Atencao);
+                _notificador.ApresentarMensagem("Nenhuma tarefa disponível.", TipoMensagem.Atencao);
                 return false;
             }
 
@@ -118,13 +118,13 @@ namespace eAgenda.ConsoleApp.ModuloTarefa
 
             do
             {
-                Console.Write("Digite o ID do garçom que deseja selecionar: ");
+                Console.Write("Digite o ID do tarefa que deseja selecionar: ");
                 numeroRegistro = Convert.ToInt32(Console.ReadLine());
 
                 numeroRegistroEncontrado = _repositorioTarefa.ExisteRegistro(numeroRegistro);
 
                 if (numeroRegistroEncontrado == false)
-                    _notificador.ApresentarMensagem("ID do garçom não foi encontrado, digite novamente", TipoMensagem.Atencao);
+                    _notificador.ApresentarMensagem("ID da tarefa não foi encontrado, digite novamente", TipoMensagem.Atencao);
 
             } while (numeroRegistroEncontrado == false);
 
