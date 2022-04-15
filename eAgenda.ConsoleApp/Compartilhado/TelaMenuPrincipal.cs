@@ -1,4 +1,5 @@
 ﻿using eAgenda.ConsoleApp.ModuloTarefa;
+using eAgenda.ConsoleApp.ModuloContato;
 using eAgenda.ConsoleApp.ModuloCompromisso;
 using System;
 
@@ -9,6 +10,9 @@ namespace eAgenda.ConsoleApp.Compartilhado
         private readonly IRepositorio<Tarefa> repositorioTarefa;
         private readonly TelaCadastroTarefa telaCadastroTarefa;
 
+        private readonly IRepositorio<Contato> repositorioContato;
+        private readonly TelaCadastroContato telaCadastroContato;
+
         private readonly IRepositorio<Compromisso> repositorioCompromisso;
         private readonly TelaCadastroCompromisso telaCadastroCompromisso;
 
@@ -16,6 +20,9 @@ namespace eAgenda.ConsoleApp.Compartilhado
         {
             repositorioTarefa = new RepositorioTarefa();
             telaCadastroTarefa = new TelaCadastroTarefa(repositorioTarefa, notificador);
+
+            repositorioContato = new RepositorioContato();
+            telaCadastroContato = new TelaCadastroContato(repositorioContato, notificador);
 
             repositorioCompromisso = new RepositorioCompromisso();
             telaCadastroCompromisso = new TelaCadastroCompromisso(repositorioCompromisso, notificador);
@@ -28,11 +35,8 @@ namespace eAgenda.ConsoleApp.Compartilhado
             Console.WriteLine();
 
             Console.WriteLine("[1] Gerenciar Tarefas");
-
             Console.WriteLine("[2] Gerenciar Contatos");
-
             Console.WriteLine("[3] Gerenciar Compromissos");
-
             Console.WriteLine("[s] para sair");
 
             string opcaoSelecionada = Console.ReadLine();
@@ -50,7 +54,7 @@ namespace eAgenda.ConsoleApp.Compartilhado
                 tela = telaCadastroTarefa;
 
             else if (opcao == "2")
-                tela = null;
+                tela = telaCadastroContato;
 
             else if (opcao == "3")
                 tela = telaCadastroCompromisso;
