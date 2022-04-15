@@ -108,10 +108,10 @@ namespace eAgenda.ConsoleApp.ModuloCompromisso
             Console.Write("Digite a data do compromisso: ");
             DateTime data = new DateTime();
 
-            Console.Write("Digite a hora do início do compromisso (hh:mm): ");
+            Console.Write("Digite a hora do início do compromisso (horas:minuto): ");
             string hora_inicio = Console.ReadLine();
 
-            Console.Write("Digite a hora do termino do compromisso (hh:mm): ");
+            Console.Write("Digite a hora do termino do compromisso (horas:minutos): ");
             string hora_termino = Console.ReadLine();
 
             return new Compromisso(assunto, local, data, hora_inicio, hora_termino);
