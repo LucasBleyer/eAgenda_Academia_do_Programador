@@ -6,100 +6,109 @@ namespace eAgenda.ConsoleApp.ModuloTarefa
 {
     internal class TelaCadastroTarefa : TelaBase, ITelaCadastravel
     {
-        private readonly IRepositorio<Conta> _repositorioConta;
+        private readonly IRepositorio<Tarefa> _repositorioTarefa;
         private readonly Notificador _notificador;
 
-        public TelaCadastroConta(IRepositorio<Conta> repositorioPedido, Notificador notificador)
-            : base("Cadastro de Contas")
+        public TelaCadastroTarefa(IRepositorio<Tarefa> repositorioTarefa, Notificador notificador)
+            : base("Cadastro de Tarefas")
         {
-            _repositorioConta = repositorioPedido;
+            _repositorioTarefa = repositorioTarefa;
             _notificador = notificador;
         }
 
         public void Inserir()
         {
-            MostrarTitulo("Cadastro de Contas");
+            MostrarTitulo("Cadastro de Tarefas");
 
-            Conta novoPedido = obterPedido();
+            Tarefa novaTarefa = obterTarefa();
 
-            _repositorioConta.Inserir(novoPedido);
+            _repositorioTarefa.Inserir(novaTarefa);
 
-            _notificador.ApresentarMensagem("Conta cadastrada com sucesso!", TipoMensagem.Sucesso);
+            _notificador.ApresentarMensagem("Tarefas cadastrada com sucesso!", TipoMensagem.Sucesso);
         }
 
         public void Editar()
         {
-            MostrarTitulo("Editando Conta");
+            MostrarTitulo("Editando Tarefa");
 
             bool temRegistrosCadastrados = VisualizarRegistros("Pesquisando");
 
             if (temRegistrosCadastrados == false)
             {
-                _notificador.ApresentarMensagem("Nenhuma conta cadastrado para editar.", TipoMensagem.Atencao);
+                _notificador.ApresentarMensagem("Nenhuma tarefa cadastrada para editar.", TipoMensagem.Atencao);
                 return;
             }
 
             int numeroGenero = ObterNumeroRegistro();
 
-            Conta pedidoAtualizado = obterPedido();
+            Tarefa terefaAtualizada = obterTarefa();
 
-            bool conseguiuEditar = _repositorioConta.Editar(numeroGenero, pedidoAtualizado);
+            bool conseguiuEditar = _repositorioTarefa.Editar(numeroGenero, terefaAtualizada);
 
             if (!conseguiuEditar)
                 _notificador.ApresentarMensagem("Não foi possível editar.", TipoMensagem.Erro);
             else
-                _notificador.ApresentarMensagem("Pedido editado com sucesso!", TipoMensagem.Sucesso);
+                _notificador.ApresentarMensagem("Tarefa editada com sucesso!", TipoMensagem.Sucesso);
         }
 
         public void Excluir()
         {
-            MostrarTitulo("Excluindo Conta");
+            MostrarTitulo("Excluindo Tarefa");
 
-            bool temContasRegistradas = VisualizarRegistros("Pesquisando");
+            bool temTarefasRegistradas = VisualizarRegistros("Pesquisando");
 
-            if (temContasRegistradas == false)
+            if (temTarefasRegistradas == false)
             {
-                _notificador.ApresentarMensagem("Nenhuma conta cadastrado para excluir.", TipoMensagem.Atencao);
+                _notificador.ApresentarMensagem("Nenhuma tarefa cadastrada para excluir.", TipoMensagem.Atencao);
                 return;
             }
 
-            int numeroConta = ObterNumeroRegistro();
+            int numeroTarefa = ObterNumeroRegistro();
 
-            bool conseguiuExcluir = _repositorioConta.Excluir(numeroConta);
+            bool conseguiuExcluir = _repositorioTarefa.Excluir(numeroTarefa);
 
             if (!conseguiuExcluir)
                 _notificador.ApresentarMensagem("Não foi possível excluir.", TipoMensagem.Erro);
             else
-                _notificador.ApresentarMensagem("Conta excluída com sucesso!", TipoMensagem.Sucesso);
+                _notificador.ApresentarMensagem("Tarefa excluída com sucesso!", TipoMensagem.Sucesso);
         }
 
         public bool VisualizarRegistros(string tipoVisualizacao)
         {
             if (tipoVisualizacao == "Tela")
-                MostrarTitulo("Visualização de Contas Cadastradas");
+                MostrarTitulo("Visualização de Tarefas Cadastradas");
 
-            List<Conta> contas = _repositorioConta.SelecionarTodos();
+            List<Tarefa> tarefas = _repositorioTarefa.SelecionarTodos();
 
-            if (contas.Count == 0)
+            if (tarefas.Count == 0)
             {
-                _notificador.ApresentarMensagem("Nenhuma conta disponível.", TipoMensagem.Atencao);
+                _notificador.ApresentarMensagem("Nenhum garçom disponível.", TipoMensagem.Atencao);
                 return false;
             }
 
-            foreach (Conta conta in contas)
-                Console.WriteLine(conta.ToString());
+            foreach (Tarefa tarefa in tarefas)
+                Console.WriteLine(tarefa.ToString());
 
             Console.ReadLine();
 
             return true;
         }
 
-        private Conta obterPedido()
+        private Tarefa obterTarefa()
         {
-            Console.Write("Digite o código da conta: ");
-            string codigo = Console.ReadLine();
+            Console.Write("Digite o título da tarefa: ");
+            string titulo = Console.ReadLine();
 
-            return new Conta(codigo);
+            Console.Write("Nível de prioridade da tarefa de 0 a 10: ");
+            int nivel_prioridade = Convert.ToInt32(Console.ReadLine());
+
+            Console.Write("Data de criação da tarefa: ");
+            DateTime data_criacao = new DateTime();
+
+            Console.Write("Data de conclusão da tarefa: ");
+            DateTime data_conclusao = new DateTime();
+
+            return new Tarefa(titulo, nivel_prioridade, data_criacao,data_conclusao);//percentual_conclusao
         }
 
         public int ObterNumeroRegistro()
@@ -109,13 +118,13 @@ namespace eAgenda.ConsoleApp.ModuloTarefa
 
             do
             {
-                Console.Write("Digite o ID da conta que deseja selecionar: ");
+                Console.Write("Digite o ID do garçom que deseja selecionar: ");
                 numeroRegistro = Convert.ToInt32(Console.ReadLine());
 
-                numeroRegistroEncontrado = _repositorioConta.ExisteRegistro(numeroRegistro);
+                numeroRegistroEncontrado = _repositorioTarefa.ExisteRegistro(numeroRegistro);
 
                 if (numeroRegistroEncontrado == false)
-                    _notificador.ApresentarMensagem("ID da conta não foi encontrada, digite novamente", TipoMensagem.Atencao);
+                    _notificador.ApresentarMensagem("ID do garçom não foi encontrado, digite novamente", TipoMensagem.Atencao);
 
             } while (numeroRegistroEncontrado == false);
 
